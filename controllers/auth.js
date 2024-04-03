@@ -49,6 +49,8 @@ export const login = async (req, res) => {
     ]);
     if (!userExists[0][0]) res.status(404).json("User not found!");
 
+    // console.log("user Id in auth:", userExists[0][0].id);
+
     //  Check password is correct
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
@@ -58,14 +60,14 @@ export const login = async (req, res) => {
 
     // Generate token
     const token = jwt.sign(
-      { email: userExists[0][0].email, id: userExists[0][0]._id },
+      { email: userExists[0][0].email, userId: userExists[0][0].id },
       process.env.JWT_SECRET_KEY
     );
 
     // separate password from user credentials
     const { password, ...other } = userExists[0][0];
-    console.log("other fields", other);
-    console.log("user password", password);
+    // console.log("other fields", other);
+    // console.log("user password", password);
 
     res
       .cookie("access_token", token, {
