@@ -2,17 +2,18 @@ import { Router } from "express";
 import {
   getPosts,
   getPost,
-  //   createPost,
-  //   updatePost,
-  //   deletePost,
+  addPost,
+  updatePost,
+  deletePost,
 } from "../controllers/post.js";
+import auth from "../middleware/auth.js";
 
 const router = Router();
 
 router.get("/", getPosts);
 router.get("/getPost/:id", getPost);
-// router.post("/createPost", createPost);
-// router.put("/updatePost/:id", updatePost);
-// router.delete("/deletePost/:id", deletePost);
+router.post("/addPost", auth, addPost);
+router.put("/updatePost/:id", auth, updatePost);
+router.delete("/deletePost/:id", auth, deletePost);
 
 export default router;
